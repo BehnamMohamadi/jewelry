@@ -20,7 +20,7 @@ const getUserById = async (req, res, next) => {
 const getAllUsers = async (req, res, next) => {
   const userModel = new ApiFeatures(
     User.find({}).select("_id firstname lastname username role createdAt"),
-    req.query
+    req.query,
   )
     .sort()
     .filter()
@@ -56,7 +56,7 @@ const addUser = async (req, res, next) => {
   const duplicateUsername = await User.findOne({ username });
   if (!!duplicateUsername) {
     return next(
-      new AppError(409, "username is already exists, use a different username")
+      new AppError(409, "username is already exists, use a different username"),
     );
   }
 
@@ -91,14 +91,16 @@ const editUserById = async (req, res, next) => {
     return next(new AppError(404, `user (id: ${userId}) not found`));
   }
 
-  const duplicateUsername = await User.findOne({
-    username,
-    _id: { $ne: user._id },
-  });
-  if (!!duplicateUsername) {
-    return next(
-      new AppError(409, "username is already exists, use a different username")
-    );
+  if (username) {
+    const duplicateUsername = await User.findOne({
+      username,
+      _id: { $ne: user._id },
+    });
+    if (!!duplicateUsername) {
+      return next(
+        new AppError(409, "username is already exists, use a different username"),
+      );
+    }
   }
 
   const duplicatePhonenumber = await User.findOne({
@@ -107,7 +109,7 @@ const editUserById = async (req, res, next) => {
   });
   if (!!duplicatePhonenumber) {
     return next(
-      new AppError(409, "phonenumber is already exists, use a different phonenumber")
+      new AppError(409, "phonenumber is already exists, use a different phonenumber"),
     );
   }
 

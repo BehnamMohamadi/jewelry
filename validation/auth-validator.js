@@ -4,13 +4,14 @@ const loginValidationSchema = Joi.object({
     .email({ minDomainSegments: 2, tlds: { allow: ["com", "net"] } })
     .trim()
     .required(),
-  password: Joi.string()
-    .min(8)
-    .max(30)
-    .pattern(/[a-z]/)
-    .pattern(/[A-Z]/)
-    .pattern(/[0-9]/)
-    .required(),
+  // password: Joi.string()
+  //   .min(8)
+  //   .max(30)
+  //   .pattern(/[a-z]/)
+  //   .pattern(/[A-Z]/)
+  //   .pattern(/[0-9]/)
+  //   .required(),
+  password: Joi.string().min(8).max(30).required(),
 });
 
 const signupValidationSchema = Joi.object({

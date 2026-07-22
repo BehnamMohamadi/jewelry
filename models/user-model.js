@@ -26,6 +26,7 @@ const UserSchema = new Schema(
       lowercase: true,
       trim: true,
     },
+
     password: {
       type: String,
       minlength: [8, "password must be at least 8 charector"],
@@ -47,6 +48,7 @@ const UserSchema = new Schema(
       lowercase: true,
     },
 
+    //maybe this property should be use as username
     phonenumber: {
       type: String,
       default: "",
@@ -66,6 +68,7 @@ const UserSchema = new Schema(
       default: "tehran",
     },
 
+    //maybe this property should be delete
     profile: {
       type: String,
       default: "users-default-profile.jpeg",
@@ -75,13 +78,13 @@ const UserSchema = new Schema(
 );
 
 UserSchema.pre("save", async function () {
-  if (!this.isModified("password") || this.isNew) {
-    return next();
-  }
-  this.password = await bcrypt.hash(this.password, 12);
-  this.passwordChangedAt = Date.now() - 1000;
+  if (!this.isModified("password")) return;
 
-  next();
+  this.password = await bcrypt.hash(this.password, 12);
+  console.log(this);
+  if (!this.isNew) {
+    this.passwordChangedAt = Date.now() - 1000;
+  }
 });
 
 UserSchema.methods.comparePassword = async function (password) {
