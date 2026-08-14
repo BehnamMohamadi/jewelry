@@ -1,106 +1,89 @@
 const { Schema, model } = require("mongoose");
-const { isEmail, isMobilePhone } = require("validator");
 const bcrypt = require("bcrypt");
+const { isEmail, isMobilePhone } = require("validator");
 
 const UserSchema = new Schema(
   {
-    firstname: {
+    phonenumber: {
       type: String,
-      minlength: [3, "firstname must be atleast 3 charector"],
-      maxlength: [30, "firstname must be maximum 30 charector"],
-      required: [true, "firstname is required"],
+      required: [true, "Phonenumber number is required"],
+      unique: true,
       trim: true,
+      validate: {
+        validator: (value) => isMobilePhone(value, "fa-IR"),
+        message: "Invalid Phonenumber ",
+      },
     },
-    lastname: {
-      type: String,
-      minlength: [3, "lastname must be atleast 3 charector"],
-      maxlength: [30, "lastname must be maximum 30 charector"],
-      required: [true, "lastname is required"],
-      trim: true,
-    },
-    username: {
+
+    email: {
       type: String,
       unique: true,
-      validate: { validator: (value) => isEmail(value) },
-      required: [true, "email is required"],
+      sparse: true,
       lowercase: true,
       trim: true,
+      validate: {
+        validator: (value) => !value || isEmail(value),
+        message: "Invalid email",
+      },
+    },
+
+    firstname: {
+      type: String,
+      trim: true,
+      default: "",
+      maxlength: 30,
+    },
+
+    lastname: {
+      type: String,
+      trim: true,
+      default: "",
+      maxlength: 30,
     },
 
     password: {
       type: String,
-      minlength: [8, "password must be at least 8 charector"],
-      validate: {
-        validator: (pass) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(pass),
-        message: "password must be have atleast one char or one number",
-      },
-      required: [true, "password is required"],
-      trim: true,
+      required: [true, "Password is required"],
+      minlength: 8,
     },
+
     role: {
       type: String,
-      enum: {
-        values: ["customer", "admin"],
-        message: "role is eather customer or admin",
-      },
+      enum: ["customer", "admin"],
       default: "customer",
-      trim: true,
-      lowercase: true,
     },
 
-    //maybe this property should be use as username
-    phonenumber: {
-      type: String,
-      default: "",
-
-      validate: {
-        validator: (value) => {
-          if (value === "") return true;
-          return isMobilePhone(value, "fa-IR");
-        },
-        message: "Provide a valid phone number",
-      },
+    isPhonenumberVerified: {
+      type: Boolean,
+      default: false,
     },
 
-    address: {
-      type: String,
-      trim: true,
-      default: "tehran",
-    },
-
-    //maybe this property should be delete
-    profile: {
-      type: String,
-      default: "users-default-profile.jpeg",
-    },
+    passwordChangedAt: Date,
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+  },
 );
 
 UserSchema.pre("save", async function () {
   if (!this.isModified("password")) return;
 
   this.password = await bcrypt.hash(this.password, 12);
-  console.log(this);
+
   if (!this.isNew) {
     this.passwordChangedAt = Date.now() - 1000;
   }
 });
 
 UserSchema.methods.comparePassword = async function (password) {
-  return await bcrypt.compare(password, this.password);
+  return bcrypt.compare(password, this.password);
 };
-
 UserSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
-  try {
-    if (!this.passwordChangedAt) return false;
+  if (!this.passwordChangedAt) return false;
 
-    const changedTimestamp = Math.floor(this.passwordChangedAt.getTime() / 1000);
-    return JWTTimestamp < changedTimestamp;
-  } catch (error) {
-    console.error("Error in changedPasswordAfter:", error);
-    return true;
-  }
+  const changedTimestamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
+
+  return JWTTimestamp < changedTimestamp;
 };
 
 module.exports = model("User", UserSchema);

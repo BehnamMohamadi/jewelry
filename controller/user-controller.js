@@ -1,4 +1,3 @@
-//user-controler.js
 const User = require("../models/user-model");
 const { AppError } = require("../utils/app-error");
 const { ApiFeatures } = require("../utils/api-features");
@@ -6,7 +5,8 @@ const { ApiFeatures } = require("../utils/api-features");
 const getUserById = async (req, res, next) => {
   const { userId } = req.params;
 
-  const user = await User.findById(userId);
+  const user = await User.findById(userId).select("-password -__v");
+
   if (!user) {
     return next(new AppError(404, `user (id: ${userId}) not found`));
   }
@@ -17,20 +17,21 @@ const getUserById = async (req, res, next) => {
   });
 };
 
-const getAllUsers = async (req, res, next) => {
+const getAllUsers = async (req, res) => {
   const userModel = new ApiFeatures(
-    User.find({}).select("_id firstname lastname username role createdAt"),
+    User.find().select(
+      "_id firstname lastname phonenumber email role isPhonenumberVerified createdAt",
+    ),
     req.query,
   )
-    .sort()
     .filter()
-    .paginate()
-    .limitFields();
+    .sort()
+    .limitFields()
+    .paginate();
 
   const users = await userModel.model;
 
-  const totalModels = new ApiFeatures(User.find({}), req.query).filter();
-  const total = await totalModels.model;
+  const total = await User.countDocuments();
 
   const { page = 1, limit = 10 } = req.query;
 
@@ -38,35 +39,46 @@ const getAllUsers = async (req, res, next) => {
     status: "success",
     page: Number(page),
     perpage: Number(limit),
-    total: total.length,
-    totalPages: Math.ceil(total.length / Number(limit)),
+    total,
+    totalPages: Math.ceil(total / Number(limit)),
     data: { users },
   });
 };
 
 const addUser = async (req, res, next) => {
   const {
-    firstname = null,
-    lastname = null,
-    username = null,
-    password = null,
+    firstname,
+    lastname,
+    phonenumber,
+    email,
+    password,
     role = "customer",
   } = req.body;
 
-  const duplicateUsername = await User.findOne({ username });
-  if (!!duplicateUsername) {
-    return next(
-      new AppError(409, "username is already exists, use a different username"),
-    );
+  const duplicatePhone = await User.findOne({ phonenumber });
+
+  if (duplicatePhone) {
+    return next(new AppError(409, "Phone number already exists."));
+  }
+
+  if (email) {
+    const duplicateEmail = await User.findOne({ email });
+
+    if (duplicateEmail) {
+      return next(new AppError(409, "Email already exists."));
+    }
   }
 
   const user = await User.create({
     firstname,
     lastname,
-    username,
+    phonenumber,
+    email,
     password,
     role,
   });
+
+  user.password = undefined;
 
   res.status(201).json({
     status: "success",
@@ -78,48 +90,55 @@ const editUserById = async (req, res, next) => {
   const { userId } = req.params;
 
   const {
-    firstname = null,
-    lastname = null,
-    gender = null,
-    username = null,
-    phonenumber = "",
-    address = null,
+    firstname,
+    lastname,
+    phonenumber,
+    email,
+    role,
+    isPhonenumberVerified = false,
   } = req.body;
 
   const user = await User.findById(userId);
+
   if (!user) {
     return next(new AppError(404, `user (id: ${userId}) not found`));
   }
 
-  if (username) {
-    const duplicateUsername = await User.findOne({
-      username,
-      _id: { $ne: user._id },
+  if (phonenumber) {
+    const duplicatePhone = await User.findOne({
+      phonenumber,
+      _id: { $ne: userId },
     });
-    if (!!duplicateUsername) {
-      return next(
-        new AppError(409, "username is already exists, use a different username"),
-      );
+
+    if (duplicatePhone) {
+      return next(new AppError(409, "Phone number already exists."));
     }
+
+    user.phonenumber = phonenumber;
   }
 
-  const duplicatePhonenumber = await User.findOne({
-    phonenumber,
-    _id: { $ne: user._id },
-  });
-  if (!!duplicatePhonenumber) {
-    return next(
-      new AppError(409, "phonenumber is already exists, use a different phonenumber"),
-    );
+  if (email) {
+    const duplicateEmail = await User.findOne({
+      email,
+      _id: { $ne: userId },
+    });
+
+    if (duplicateEmail) {
+      return next(new AppError(409, "Email already exists."));
+    }
+
+    user.email = email;
   }
 
-  user.firstname = firstname ?? user.firstname;
-  user.lastname = lastname ?? user.lastname;
-  user.username = username ?? user.username;
-  user.address = address ?? user.address;
-  user.phonenumber = phonenumber ?? user.phonenumber;
+  if (firstname !== undefined) user.firstname = firstname;
+  if (lastname !== undefined) user.lastname = lastname;
+  if (role !== undefined) user.role = role;
+  if (isPhonenumberVerified !== undefined)
+    user.isPhonenumberVerified = isPhonenumberVerified;
 
   await user.save({ validateModifiedOnly: true });
+
+  user.password = undefined;
 
   res.status(200).json({
     status: "success",
@@ -130,7 +149,11 @@ const editUserById = async (req, res, next) => {
 const deleteUserById = async (req, res, next) => {
   const { userId } = req.params;
 
-  await User.findByIdAndDelete(userId);
+  const user = await User.findByIdAndDelete(userId);
+
+  if (!user) {
+    return next(new AppError(404, `user (id: ${userId}) not found`));
+  }
 
   res.status(204).json({
     status: "success",
@@ -140,22 +163,27 @@ const deleteUserById = async (req, res, next) => {
 
 const promoteUserToAdmin = async (req, res, next) => {
   const { userId } = req.params;
-  const { role } = req.body;
 
   const user = await User.findById(userId);
 
   if (!user) {
-    return next(new AppError(409, `user with id${userId} not-found`));
+    return next(new AppError(404, `user (id: ${userId}) not found`));
   }
 
-  if (user.role === role) {
-    return next(new AppError(400, "this user is already an admin"));
+  if (user.role === "admin") {
+    return next(new AppError(400, "User is already admin."));
   }
 
-  user.role = role;
+  user.role = "admin";
+
   await user.save({ validateModifiedOnly: true });
 
-  res.status(200).json({ status: "success", data: { message: "role has been changed" } });
+  res.status(200).json({
+    status: "success",
+    data: {
+      message: "Role changed successfully.",
+    },
+  });
 };
 
 module.exports = {

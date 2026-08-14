@@ -1,6 +1,6 @@
-//auth-controller.js - Fixed Version
 const User = require("../models/user-model");
 const { AppError } = require("../utils/app-error");
+
 const jwt = require("jsonwebtoken");
 const { promisify } = require("node:util");
 
@@ -10,173 +10,186 @@ const signToken = (id) => {
   });
 };
 
-const sendToken = (user, statusCode, response) => {
+const sendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
 
-  response.cookie("jwt", token, {
-    expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 60 * 60 * 1000),
+  res.cookie("jwt", token, {
+    expires: new Date(
+      Date.now() + Number(process.env.JWT_COOKIE_EXPIRES_IN) * 60 * 60 * 1000,
+    ),
     httpOnly: true,
     sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
   });
 
-  response.status(statusCode).json({
+  user.password = undefined;
+
+  res.status(statusCode).json({
     status: "success",
     token,
-    data: { user },
+    data: {
+      user,
+    },
   });
 };
 
-const login = async (req, res, next) => {
-  if (!!req.cookies.jwt) {
-    return next(new AppError(400, "you were logged in "));
-  }
-
-  const { username, password } = req.body;
-
-  if (!username || !password) {
-    return next(new AppError(400, "invalid username or password"));
-  }
-
-  const user = await User.findOne({ username });
-  if (!user) {
-    return next(new AppError(401, "username or password is not valid{username}"));
-  }
-
-  const isPasswordMatch = await user.comparePassword(password);
-  if (!isPasswordMatch) {
-    return next(new AppError(401, "username or password is not valid {password}"));
-  }
-
-  sendToken(user, 200, res);
-};
+/* ===========================
+          SIGNUP
+=========================== */
 
 const signup = async (req, res, next) => {
-  const { authorization = null } = req.headers;
-
-  if (!!req.cookies.jwt) {
-    return next(new AppError(400, "you were logged in "));
-  } else if (!!authorization && authorization?.startsWith("Bearer")) {
-    return next(new AppError(400, "you were logged in "));
+  if (req.cookies?.jwt) {
+    return next(new AppError(400, "You are already logged in."));
   }
 
-  const { firstname, lastname, username, password } = req.body;
+  const { firstname, lastname, phonenumber, password, email } = req.body;
 
-  const usernameExists = await User.exists({ username });
-  if (!!usernameExists) {
-    return next(new AppError(409, "this username is already exist"));
+  const exists = await User.findOne({ phonenumber });
+
+  if (exists) {
+    return next(new AppError(409, "Phone number already exists."));
   }
 
   const user = await User.create({
     firstname,
     lastname,
-    username,
+    phonenumber,
     password,
+    email,
     role: "customer",
   });
 
   sendToken(user, 201, res);
 };
 
-const protect = async (req, res, next) => {
-  const { authorization = null } = req.headers;
+/* ===========================
+          LOGIN
+=========================== */
 
-  let token = null;
-
-  // Check for token in cookies first (preferred for browser requests)
-  if (!!req.cookies.jwt) {
-    token = req.cookies.jwt;
-  } else if (!!authorization && authorization?.startsWith("Bearer")) {
-    token = req.headers.authorization.split(" ").at(1);
+const login = async (req, res, next) => {
+  if (req.cookies?.jwt) {
+    return next(new AppError(400, "You are already logged in."));
   }
 
-  console.log("Token found:", !!token);
+  const { phonenumber, password } = req.body;
+
+  if (!phonenumber || !password) {
+    return next(new AppError(400, "Please provide phone number and password."));
+  }
+
+  const user = await User.findOne({ phonenumber });
+
+  if (!user) {
+    return next(new AppError(401, "Invalid phone number or password."));
+  }
+
+  const correct = await user.comparePassword(password);
+
+  if (!correct) {
+    return next(new AppError(401, "Invalid phone number or password."));
+  }
+
+  sendToken(user, 200, res);
+};
+
+/* ===========================
+          PROTECT
+=========================== */
+
+const protect = async (req, res, next) => {
+  let token;
+
+  if (req.cookies?.jwt) {
+    token = req.cookies.jwt;
+  } else if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    token = req.headers.authorization.split(" ")[1];
+  }
 
   if (!token) {
-    return next(new AppError(401, "you are not logged in"));
+    return next(new AppError(401, "You are not logged in."));
   }
 
-  try {
-    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
-    const currentUser = await User.findById(decoded.id).select(
-      "-password  -__v -createdAt -updatedAt"
-    );
-    if (!currentUser) {
-      return next(new AppError(401, "the user belong to this token does not exist"));
-    }
+  const currentUser = await User.findById(decoded.id);
 
-    if (currentUser.changedPasswordAfter(decoded.iat)) {
-      return next(
-        new AppError(401, "password has been changed please try to login at first")
-      );
-    }
-
-    req.user = currentUser;
-    next();
-  } catch (error) {
-    console.error("JWT verification error:", error);
-    return next(new AppError(401, "Invalid token"));
+  if (!currentUser) {
+    return next(new AppError(401, "User no longer exists."));
   }
+
+  if (currentUser.changedPasswordAfter(decoded.iat)) {
+    return next(new AppError(401, "Password changed recently. Please login again."));
+  }
+
+  req.user = currentUser;
+
+  next();
 };
+
+/* ===========================
+        RESTRICT TO
+=========================== */
 
 const restrictTo = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      return res.status(403).json({
-        status: "fail",
-        data: { message: "you do not have permission to perform this action" },
-      });
+      return next(
+        new AppError(403, "You do not have permission to perform this action."),
+      );
     }
 
     next();
   };
 };
 
+/* ===========================
+        IS LOGGED IN
+=========================== */
+
 const isLoggedIn = async (req, res, next) => {
-  if (!req.cookies.jwt) return next();
+  if (!req.cookies?.jwt) return next();
 
   try {
-    const token = req.cookies.jwt;
+    const decoded = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRET);
 
-    const { id: userId } = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
 
-    const user = await User.findById(userId);
+    if (!user) return next();
 
-    if (!user) {
-      return res.status(401).json({
-        status: "fail",
-        data: { message: "the user belonging to this token does no longer exist" },
-      });
+    if (user.changedPasswordAfter(decoded.iat)) {
+      return next();
     }
 
     res.locals.user = user;
-    next();
-  } catch (error) {
-    console.error("isLoggedIn error:", error);
-    return next();
-  }
+  } catch (err) {}
+
+  next();
 };
 
-const logout = (req, res, next) => {
-  const { authorization = null } = req.headers;
+/* ===========================
+          LOGOUT
+=========================== */
 
-  //delete previouse token
-  if (!req.cookies.jwt) {
-    return next(new AppError(400, "you were not logged in "));
-  }
-
+const logout = (req, res) => {
   res.clearCookie("jwt", {
     httpOnly: true,
     sameSite: "lax",
   });
-  res.status(200).json({ status: "success", data: null });
+
+  res.status(200).json({
+    status: "success",
+    data: null,
+  });
 };
 
 module.exports = {
-  login,
   signup,
+  login,
   logout,
   protect,
-  isLoggedIn,
   restrictTo,
+  isLoggedIn,
 };

@@ -1,40 +1,52 @@
-//subcategory-model.js
+// subcategory-model.js
 
 const mongoose = require("mongoose");
-const { Schema, model } = require("mongoose");
 
-const allowedSubCategories = process.env.SEED_PRODUCTS_SUBCATEGORIES;
+const subcategorySchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
 
-const SubCategorySchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-    unique: true,
-    enum: allowedSubCategories,
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      lowercase: true,
+    },
+
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+      required: true,
+    },
+
+    description: {
+      type: String,
+      default: "",
+    },
+
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+
+    sortOrder: {
+      type: Number,
+      default: 0,
+    },
+
+    icon: {
+      type: String,
+      default: "default-icon.jpeg",
+    },
   },
-  category: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Category",
-    required: true,
+  {
+    timestamps: true,
   },
-  icon: {
-    type: String,
-    default: "default-sub-icon.jpeg",
-  },
-});
+);
 
-// SubCategorySchema.pre("save", function (next) {
-//   const icons = {
-//     legumes: "legumes-icon.jpeg",
-//     dairy: "dairy-icon.jpeg",
-//     protein: "protein-icon.jpeg",
-//     smartPhone: "smartPhone-icon.jpeg",
-//     laptop: "laptop-icon.jpeg",
-//     tv: "tv-icon.jpeg",
-//   };
-
-//   this.icon = icons[this.name] || "default-sub-icon.jpeg";
-//   next();
-// });
-
-module.exports = model("SubCategory", SubCategorySchema);
+module.exports = mongoose.model("Subcategory", subcategorySchema);

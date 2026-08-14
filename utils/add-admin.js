@@ -10,7 +10,7 @@ const addAdmin = asyncHandler(async () => {
   await User.create({
     firstname: process.env.ADMIN_FIRSTNAME,
     lastname: process.env.ADMIN_LASTNAME,
-    username: process.env.ADMIN_USERNAME,
+    phonenumber: process.env.ADMIN_PHONENUMBER,
     password: process.env.ADMIN_PASSWORD,
     role: "admin",
   });
