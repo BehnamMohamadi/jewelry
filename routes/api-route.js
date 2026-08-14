@@ -8,6 +8,8 @@ const categoryRouter = require("./category-route");
 const subCategoriesRouter = require("./subCategory-route");
 const basketRouter = require("./basketRoutes/basket-route");
 const productRouter = require("./productRoutes/product-route");
+const boxRouter = require("./boxRoutes/box-route");
+
 const wishlistRouter = require("./wishlist-routes");
 
 router.use("/auth", authRouter);
@@ -17,6 +19,7 @@ router.use("/users", userRouter);
 router.use("/account", accountRouter);
 
 router.use("/products", productRouter);
+router.use("/boxes", boxRouter);
 
 router.use("/categories", categoryRouter);
 
