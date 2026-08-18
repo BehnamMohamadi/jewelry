@@ -62,12 +62,12 @@ router.delete("/:boxId", asyncHandler(deleteBox));
 // Change Thumbnail
 // ====================
 
-router.patch("/:boxId/thumbnail", uploadBoxThumbnail, asyncHandler(changeBoxThumbnail));
+router.patch("/thumbnail/:boxId", uploadBoxThumbnail, asyncHandler(changeBoxThumbnail));
 
 // ====================
 // Change Images
 // ====================
 
-router.patch("/:boxId/images", uploadBoxImages, asyncHandler(changeBoxImages));
+router.patch("/images/:boxId", uploadBoxImages, asyncHandler(changeBoxImages));
 
 module.exports = router;

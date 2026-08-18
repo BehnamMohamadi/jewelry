@@ -23,7 +23,7 @@ const wishlistSchema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 // Compound index to prevent duplicate entries

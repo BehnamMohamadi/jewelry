@@ -336,7 +336,7 @@ const resizeBoxThumbnail = async (boxId, file) => {
 
   const filepath = join(
     __dirname,
-    `../public/images/models-images/box-thumbnails/${filename}`,
+    `../../public/images/models-images/box/box-thumbnails/${filename}`,
   );
 
   await sharp(file.buffer)
@@ -403,11 +403,11 @@ const resizeBoxImages = async (boxId, files) => {
   const filenames = [];
 
   for (const file of files) {
-    const filename = `box-${boxId}-${Date.now()}-${Math.round(Math.random() * 100000)}.jpeg`;
+    const filename = `box-image-${boxId}-${Date.now()}-${Math.round(Math.random() * 100000)}.jpeg`;
 
     const filepath = join(
       __dirname,
-      `../public/images/models-images/box-images/${filename}`,
+      `../../public/images/models-images/box/box-images/${filename}`,
     );
 
     await sharp(file.buffer)
