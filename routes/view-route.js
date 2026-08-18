@@ -1,45 +1,33 @@
-//view-route.js
 const router = require("express").Router();
 
-// Add these routes to your view-route.js file
-
 const {
+  renderHomePage,
   renderLoginPage,
-  renderShopPage,
   renderSignUpPage,
-  renderProfilePage,
-  renderStorePage,
-  renderProductLandingPage,
-  renderSingleProductPage,
-  renderBasketPage,
-  renderProductDetailPage,
-  renderAdminPanelPage,
-  renderWishlistPage,
-  renderOrderHistoryPage,
 } = require("../controller/view-controller");
 
-const { isLoggedIn } = require("../controller/auth-controller");
-const { asyncHandler } = require("../utils/async-handler");
+const { setViewUser } = require("../middleware/view-auth");
+
+// ===============================
+// VIEW AUTH
+// ===============================
+
+// وضعیت کاربر را برای تمام View ها مشخص می‌کند
+// مهمان هم اجازه عبور دارد
+router.use(setViewUser);
+
+// ===============================
+// HOME
+// ===============================
+
+router.get("/", renderHomePage);
+
+// ===============================
+// AUTH PAGES
+// ===============================
 
 router.get("/login", renderLoginPage);
 
 router.get("/signup", renderSignUpPage);
-
-router.get("/shop", isLoggedIn, renderShopPage);
-router.get("/profile", isLoggedIn, renderProfilePage);
-
-router.get("/store", asyncHandler(renderStorePage));
-
-router.get("/product-landing-page", asyncHandler(renderProductLandingPage));
-
-router.get("/product", isLoggedIn, renderSingleProductPage);
-router.get("/basket", isLoggedIn, renderBasketPage);
-
-router.get("/product/:productId", isLoggedIn, renderProductDetailPage);
-
-router.get("/admin-panel", isLoggedIn, renderAdminPanelPage);
-
-router.get("/wishlist", isLoggedIn, renderWishlistPage);
-router.get("/order-history", isLoggedIn, renderOrderHistoryPage);
 
 module.exports = router;

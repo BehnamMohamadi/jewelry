@@ -41,6 +41,9 @@ connectToDatabase().then(() => {
 
 app.use(morgan("dev"));
 
+app.set("view engine", "ejs");
+app.set("views", join(__dirname, "views"));
+
 app.use(express.static(join(__dirname, "./public")));
 
 app.use(cors());

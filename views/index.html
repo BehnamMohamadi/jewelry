@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PAWEAR | Power in Every Step</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="landing.css">
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#">
+        <span class="brand-orange">pa</span><span>wear</span>
+        <small>POWER IN EVERY STEP</small>
+      </a>
+
+      <nav class="main-nav">
+        <a class="active" href="#">صفحه اصلی</a>
+        <a href="#products">محصولات</a>
+        <a href="#men">مردانه</a>
+        <a href="#women">زنانه</a>
+        <a href="#box">جوراب باکسی</a>
+        <a href="#magazine">مجله</a>
+        <a href="#about">درباره ما</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn" aria-label="حساب کاربری">♙</button>
+        <button class="cart-btn" aria-label="سبد خرید">🛒 <b id="cartCount">2</b></button>
+        <button class="menu-btn" id="menuBtn" aria-label="منو">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-glow"></div>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">PAWEAR COLLECTION</span>
+          <h1>راحتی که<br><strong>هر روز می‌پوشی</strong></h1>
+          <p>جوراب‌هایی با کیفیت بالا، طراحی شده برای راحتی، دوام و استایل در هر قدم.</p>
+          <a class="primary-btn" href="#products">مشاهده محصولات <span>←</span></a>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-orb"></div>
+          <div class="sock sock-white"><span>p</span></div>
+          <div class="sock sock-black"><span>p</span></div>
+          <div class="sock sock-gray"><span>p</span></div>
+          <div class="box-pack">
+            <span><b>pa</b>wear</span>
+            <small>POWER IN EVERY STEP</small>
+          </div>
+          <div class="folded-stack">
+            <i></i><i></i><i></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="benefits">
+      <div class="container benefits-grid">
+        <div class="benefit"><span>♢</span>
+          <div><b>دوام و کیفیت بالا</b><small>استفاده از بهترین الیاف</small></div>
+        </div>
+        <div class="benefit"><span>↻</span>
+          <div><b>تعویض آسان</b><small>۷ روز ضمانت تعویض</small></div>
+        </div>
+        <div class="benefit"><span>▱</span>
+          <div><b>ارسال سریع</b><small>ارسال به سراسر ایران</small></div>
+        </div>
+        <div class="benefit"><span>♧</span>
+          <div><b>پشتیبانی ۲۴/۷</b><small>در کنار شما هستیم</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="categories section">
+      <div class="container">
+        <div class="section-title"><span>انتخاب کن</span>
+          <h2>دسته‌بندی محصولات</h2><i></i>
+        </div>
+
+        <div class="category-grid">
+          <a class="category-card" href="#women">
+            <div class="category-art women-art">
+              <div class="mini-sock white"></div>
+              <div class="mini-sock pink"></div>
+            </div>
+            <div>
+              <h3>جوراب زنانه</h3><span>مشاهده ←</span>
+            </div>
+          </a>
+          <a class="category-card" href="#men">
+            <div class="category-art men-art">
+              <div class="mini-sock black"></div>
+              <div class="mini-sock white"></div>
+            </div>
+            <div>
+              <h3>جوراب مردانه</h3><span>مشاهده ←</span>
+            </div>
+          </a>
+          <a class="category-card featured" href="#box">
+            <div class="category-art box-art">
+              <div class="gift-box"><b>pa</b>wear</div>
+              <div class="tiny-stack"><i></i><i></i><i></i><i></i></div>
+            </div>
+            <div>
+              <h3>جوراب باکسی</h3><span>پک‌های خاص برای هدیه ←</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="products section" id="products">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-title"><span>انتخاب محبوب</span>
+            <h2>محصولات پرفروش</h2><i></i>
+          </div>
+          <div class="product-tabs" id="productTabs">
+            <button class="active" data-filter="all">همه</button>
+            <button data-filter="men">مردانه</button>
+            <button data-filter="women">زنانه</button>
+            <button data-filter="box">باکسی</button>
+          </div>
+        </div>
+        <div class="product-grid" id="productGrid"></div>
+        <div class="center"><a class="dark-btn" href="products.html">مشاهده همه محصولات</a></div>
+      </div>
+    </section>
+
+    <section class="box-banner section" id="box">
+      <div class="container box-banner-inner">
+        <div>
+          <span>PAWEAR BOX</span>
+          <h2>یک هدیه متفاوت<br>برای یک قدم متفاوت</h2>
+          <p>پک‌های جوراب با طراحی خاص، مناسب هدیه و استفاده روزمره.</p>
+          <a class="primary-btn" href="products.html?category=box">مشاهده جوراب‌های باکسی ←</a>
+        </div>
+        <div class="big-gift">
+          <div class="big-box"><b>pa</b>wear<small>POWER IN EVERY STEP</small></div>
+          <div class="box-socks"><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="experience section" id="magazine">
+      <div class="container experience-inner">
+        <div>
+          <span class="eyebrow">A BETTER STEP</span>
+          <h2>تجربه یک جوراب بهتر</h2>
+          <p>سبک، نرم و بادوام؛ جوراب‌هایی که از اولین قدم تفاوتشان را حس می‌کنی.</p>
+          <a class="dark-btn" href="#">راهنمای انتخاب</a>
+        </div>
+        <div class="experience-photo">
+          <div class="shoe"></div>
+          <div class="leg"></div>
+          <div class="leg second"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="about">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="#"><span class="brand-orange">pa</span><span>wear</span><small>POWER IN EVERY
+            STEP</small></a>
+        <p>ما در پاور با تمرکز بر کیفیت و راحتی، بهترین جوراب‌ها را برای شما تولید می‌کنیم.</p>
+      </div>
+      <div>
+        <h4>دسترسی سریع</h4><a href="#">درباره ما</a><a href="#">تماس با ما</a><a href="#">حریم خصوصی</a><a
+          href="#">قوانین و مقررات</a>
+      </div>
+      <div>
+        <h4>خدمات مشتریان</h4><a href="#">پرسش‌های متداول</a><a href="#">راهنمای خرید</a><a href="#">شرایط تعویض</a><a
+          href="#">پیگیری سفارش</a>
+      </div>
+      <div class="newsletter">
+        <h4>عضویت در خبرنامه</h4>
+        <p>جدیدترین تخفیف‌ها و محصولات را از دست ندهید.</p>
+        <form id="newsletterForm">
+          <input type="email" placeholder="ایمیل خود را وارد کنید" required>
+          <button>→</button>
+        </form>
+        <div class="socials"><span>◎</span><span>◉</span><span>◌</span><span>◍</span></div>
+      </div>
+    </div>
+    <div class="copyright">تمامی حقوق برای پاور محفوظ است.</div>
+  </footer>
+
+  <script src="landing.js"></script>
+</body>
+
+</html>

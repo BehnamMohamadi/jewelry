@@ -1,0 +1,69 @@
+@import url("https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap");
+
+:root {
+  --orange: #ff6a00;
+  --orange-light: #ff8a00;
+  --orange-dark: #ff4d00;
+
+  --black: #111111;
+  --text: #181818;
+  --text-secondary: #6b7280;
+
+  --white: #ffffff;
+  --background: #f5f5f5;
+  --border: #e5e7eb;
+
+  --container: 1180px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  direction: rtl;
+
+  margin: 0;
+
+  background: var(--background);
+  color: var(--text);
+
+  font-family: "Vazirmatn", sans-serif;
+
+  overflow-x: hidden;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+}
+
+.container {
+  width: min(92%, var(--container));
+  margin-inline: auto;
+}
+
+.section {
+  padding: 100px 0;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    <%= title %>
+  </title>
+
+
+  <!-- =========================
+       HOME STYLES
+  ========================== -->
+
+  <link rel="stylesheet" href="/stylesheet/home/home.css">
+
+  <link rel="stylesheet" href="/stylesheet/home/partials/header.css">
+
+  <link rel="stylesheet" href="/stylesheet/home/partials/hero.css">
+
+  <link rel="stylesheet" href="/stylesheet/home/partials/benefits.css">
+
+  <link rel="stylesheet" href="/stylesheet/home/partials/categories.css">
+
+  <link rel="stylesheet" href="/stylesheet/home/partials/products.css">
+
+  <link rel="stylesheet" href="/stylesheet/home/partials/box-banner.css">
+
+  <link rel="stylesheet" href="/stylesheet/home/partials/experience.css">
+
+  <link rel="stylesheet" href="/stylesheet/home/partials/footer.css">
+
+</head>
+
+
+<body>
+
+
+  <!-- =========================
+       HEADER
+  ========================== -->
+
+  <%- include("./partials/header") %>
+
+
+    <main>
+
+
+      <!-- =========================
+         HERO
+    ========================== -->
+
+      <%- include("./partials/hero") %>
+
+
+        <!-- =========================
+         BENEFITS
+    ========================== -->
+
+        <%- include("./partials/benefits") %>
+
+
+          <!-- =========================
+         CATEGORIES
+    ========================== -->
+
+          <%- include("./partials/categories") %>
+
+
+            <!-- =========================
+         PRODUCTS
+    ========================== -->
+
+            <%- include("./partials/products") %>
+
+
+              <!-- =========================
+         BOX BANNER
+    ========================== -->
+
+              <%- include("./partials/box-banner") %>
+
+
+                <!-- =========================
+         EXPERIENCE
+    ========================== -->
+
+                <%- include("./partials/experience") %>
+
+
+    </main>
+
+
+    <!-- =========================
+       FOOTER
+  ========================== -->
+
+    <%- include("./partials/footer") %>
+
+
+      <!-- =========================
+       JAVASCRIPT
+  ========================== -->
+
+      <script src="/js/home/header.js"></script>
+
+      <script src="/js/home/products.js"></script>
+
+      <script src="/js/home/home.js"></script>
+
+
+</body>
+
+</html>

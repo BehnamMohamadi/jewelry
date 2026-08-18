@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    <%= title %>
+  </title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="stylesheet/auth/signup.css">
+
+</head>
+
+<body>
+
+  <main class="auth-page">
+
+    <section class="auth-container">
+
+      <!-- VISUAL -->
+
+      <div class="visual-section">
+
+        <div class="visual-overlay"></div>
+
+        <div class="brand">
+          <span class="brand-orange">pa</span><span>wear</span>
+        </div>
+
+        <div class="visual-content">
+
+          <div class="visual-badge">
+            <span></span>
+            به خانواده pawear بپیوندید
+          </div>
+
+          <h2>
+            شروع یک<br>
+            <span>قدم جدید</span>
+          </h2>
+
+          <p>
+            حساب کاربری خود را بسازید و خریدی
+            راحت و سریع را تجربه کنید.
+          </p>
+
+          <div class="features">
+
+            <div class="feature">
+              <div class="feature-icon">✓</div>
+
+              <div>
+                <strong>خرید سریع</strong>
+                <small>
+                  محصولات مورد علاقه‌تان را سریع پیدا کنید
+                </small>
+              </div>
+            </div>
+
+            <div class="feature">
+              <div class="feature-icon">♡</div>
+
+              <div>
+                <strong>لیست علاقه‌مندی‌ها</strong>
+                <small>
+                  محصولات مورد علاقه‌تان را ذخیره کنید
+                </small>
+              </div>
+            </div>
+
+            <div class="feature">
+              <div class="feature-icon">↻</div>
+
+              <div>
+                <strong>پیگیری سفارش</strong>
+                <small>
+                  سفارش‌های خود را مدیریت کنید
+                </small>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="visual-bottom">
+          POWER IN EVERY STEP
+        </div>
+
+      </div>
+
+
+      <!-- FORM -->
+
+      <div class="form-section">
+
+        <div class="form-wrapper">
+
+          <div class="mobile-logo">
+            <span class="brand-orange">pa</span><span>wear</span>
+          </div>
+
+          <div class="form-box">
+
+            <div class="form-header">
+
+              <h1>
+                ساخت حساب کاربری
+              </h1>
+
+              <p>
+                اطلاعات خود را وارد کنید تا حساب شما ساخته شود.
+              </p>
+
+            </div>
+
+
+            <form id="signupForm" novalidate>
+
+              <!-- NAME -->
+
+              <div class="name-row">
+
+                <div class="input-group">
+
+                  <label for="signupFirstname">
+                    نام
+                  </label>
+
+                  <div class="input-wrapper">
+
+                    <input type="text" id="signupFirstname" name="firstname" placeholder="نام" autocomplete="given-name"
+                      maxlength="30">
+
+                  </div>
+
+                  <small id="firstnameError" class="field-error"></small>
+
+                </div>
+
+
+                <div class="input-group">
+
+                  <label for="signupLastname">
+                    نام خانوادگی
+                  </label>
+
+                  <div class="input-wrapper">
+
+                    <input type="text" id="signupLastname" name="lastname" placeholder="نام خانوادگی"
+                      autocomplete="family-name" maxlength="30">
+
+                  </div>
+
+                  <small id="lastnameError" class="field-error"></small>
+
+                </div>
+
+              </div>
+
+
+              <!-- PHONE -->
+
+              <div class="input-group">
+
+                <label for="signupPhone">
+                  شماره موبایل
+                </label>
+
+                <div class="input-wrapper">
+
+                  <span class="input-icon">
+                    ☎
+                  </span>
+
+                  <input type="tel" id="signupPhone" name="phonenumber" placeholder="مثلاً 09121234567"
+                    autocomplete="tel" inputmode="numeric" maxlength="11" dir="ltr">
+
+                </div>
+
+                <small id="phoneError" class="field-error"></small>
+
+              </div>
+
+
+              <!-- EMAIL -->
+
+              <div class="input-group">
+
+                <label for="signupEmail">
+
+                  ایمیل
+
+                  <span class="optional">
+                    (اختیاری)
+                  </span>
+
+                </label>
+
+                <div class="input-wrapper">
+
+                  <input type="email" id="signupEmail" name="email" placeholder="example@email.com" autocomplete="email"
+                    dir="ltr">
+
+                </div>
+
+                <small id="emailError" class="field-error"></small>
+
+              </div>
+
+
+              <!-- PASSWORD -->
+
+              <div class="input-group">
+
+                <label for="signupPassword">
+                  رمز عبور
+                </label>
+
+                <div class="input-wrapper">
+
+                  <span class="input-icon">
+                    🔒
+                  </span>
+
+                  <input type="password" id="signupPassword" name="password" placeholder="حداقل ۸ کاراکتر"
+                    autocomplete="new-password">
+
+                  <button type="button" class="password-toggle" data-target="signupPassword">
+                    ◉
+                  </button>
+
+                </div>
+
+                <small id="passwordError" class="field-error"></small>
+
+              </div>
+
+
+      
+
+              <!-- SUBMIT -->
+
+              <button type="submit" class="submit-btn" id="signupSubmit">
+
+                <span class="btn-text">
+                  ساخت حساب
+                </span>
+
+                <span class="btn-arrow">
+                  ←
+                </span>
+
+              </button>
+
+
+              <div class="divider">
+                <span>یا</span>
+              </div>
+
+
+              <button type="button" class="google-btn">
+
+                <span class="google-icon">
+                  G
+                </span>
+
+                ثبت‌نام با حساب گوگل
+
+              </button>
+
+
+              <div class="switch-form">
+
+                قبلاً حساب دارید؟
+
+                <a href="/login">
+                  وارد شوید
+                </a>
+
+              </div>
+
+            </form>
+
+
+            <div id="message" class="message" role="alert"></div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="/javascript/auth/signup.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,259 @@
+/* =========================================
+   CATEGORIES
+========================================= */
+
+.categories {
+  background: #f7f7f7;
+}
+
+.category-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 20px;
+
+  margin-top: 45px;
+}
+
+.category-card {
+  position: relative;
+
+  height: 300px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  overflow: hidden;
+
+  border-radius: 20px;
+
+  background: #ffffff;
+
+  text-decoration: none;
+
+  box-shadow:
+    0 10px 35px rgba(0, 0, 0, 0.04);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-6px);
+
+  box-shadow:
+    0 20px 45px rgba(0, 0, 0, 0.09);
+}
+
+.category-art {
+  position: absolute;
+
+  inset: 0;
+
+  overflow: hidden;
+
+  background: #eeeeee;
+}
+
+.category-art::after {
+  content: "";
+
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  right: 50%;
+  top: 45%;
+
+  border-radius: 50%;
+
+  background: rgba(255, 106, 0, 0.08);
+
+  transform: translate(50%, -50%);
+}
+
+
+/* =========================================
+   MINI SOCKS
+========================================= */
+
+.mini-sock {
+  position: absolute;
+
+  width: 70px;
+  height: 145px;
+
+  border-radius: 14px 14px 20px 20px;
+
+  box-shadow:
+    0 15px 30px rgba(0, 0, 0, 0.12);
+}
+
+.mini-sock::after {
+  content: "";
+
+  position: absolute;
+
+  bottom: -25px;
+  right: -22px;
+
+  width: 65px;
+  height: 38px;
+
+  border-radius: 7px 20px 20px 7px;
+
+  background: inherit;
+}
+
+.mini-sock.white {
+  right: 42%;
+  top: 55px;
+
+  background: #ffffff;
+
+  transform: rotate(-14deg);
+}
+
+.mini-sock.pink {
+  right: 27%;
+  top: 65px;
+
+  background: #e9b8b8;
+
+  transform: rotate(12deg);
+}
+
+.mini-sock.black {
+  right: 40%;
+  top: 52px;
+
+  background: #171717;
+
+  transform: rotate(-12deg);
+}
+
+
+/* =========================================
+   BOX ART
+========================================= */
+
+.box-art {
+  background:
+    linear-gradient(145deg,
+      #171717,
+      #292929);
+}
+
+.gift-box {
+  position: absolute;
+
+  top: 55px;
+  right: 50%;
+
+  width: 150px;
+  height: 115px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 5px;
+
+  background: #101010;
+
+  border: 1px solid rgba(255, 106, 0, 0.4);
+
+  color: #ffffff;
+
+  font-size: 22px;
+  font-weight: 800;
+
+  transform:
+    translateX(50%) rotate(-5deg);
+
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.35);
+}
+
+.gift-box b {
+  color: #ff6a00;
+}
+
+.tiny-stack {
+  position: absolute;
+
+  left: 30px;
+  bottom: 40px;
+}
+
+.tiny-stack i {
+  display: block;
+
+  width: 85px;
+  height: 18px;
+
+  margin-top: -5px;
+
+  border-radius: 8px;
+
+  background: #3b3b3b;
+}
+
+
+/* =========================================
+   CARD INFO
+========================================= */
+
+.category-card>div:last-child {
+  position: relative;
+  z-index: 2;
+
+  padding: 24px;
+
+  background:
+    linear-gradient(to top,
+      rgba(0, 0, 0, 0.8),
+      transparent);
+
+  color: #ffffff;
+}
+
+.category-card h3 {
+  margin: 0;
+
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.category-card span {
+  display: block;
+
+  margin-top: 6px;
+
+  color: rgba(255, 255, 255, 0.65);
+
+  font-size: 10px;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 800px) {
+
+  .category-grid {
+    grid-template-columns: 1fr;
+
+    gap: 15px;
+  }
+
+  .category-card {
+    height: 230px;
+  }
+
+}

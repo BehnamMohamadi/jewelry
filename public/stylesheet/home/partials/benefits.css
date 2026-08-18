@@ -1,0 +1,116 @@
+/* =========================================
+   BENEFITS
+========================================= */
+
+.benefits {
+  position: relative;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #eeeeee;
+}
+
+.benefits-grid {
+  min-height: 110px;
+
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  align-items: center;
+}
+
+.benefit {
+  display: flex;
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 14px;
+
+  padding: 20px;
+
+  border-left: 1px solid #eeeeee;
+}
+
+.benefit:last-child {
+  border-left: none;
+}
+
+.benefit>span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  border-radius: 12px;
+
+  background: #fff5ed;
+
+  color: #ff6a00;
+
+  font-size: 19px;
+}
+
+.benefit b {
+  display: block;
+
+  color: #181818;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.benefit small {
+  display: block;
+
+  margin-top: 5px;
+
+  color: #999999;
+
+  font-size: 10px;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 800px) {
+
+  .benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+
+    padding: 10px 0;
+  }
+
+  .benefit {
+    justify-content: flex-start;
+
+    border-left: none;
+  }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 480px) {
+
+  .benefits-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .benefit {
+    justify-content: center;
+
+    padding: 14px;
+  }
+
+}

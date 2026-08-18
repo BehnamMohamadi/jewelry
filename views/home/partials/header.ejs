@@ -1,0 +1,204 @@
+<header class="site-header">
+
+  <div class="container header-inner">
+
+    <!-- =========================
+         MOBILE MENU BUTTON
+    ========================== -->
+
+    <button type="button" class="menu-btn" id="menuBtn" aria-label="باز کردن منو" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+
+    <!-- =========================
+         BRAND
+    ========================== -->
+
+    <a class="brand" href="/">
+
+      <span class="brand-orange">pa</span><span>wear</span>
+      <span class="brand-orange">پا</span><span>ور</span>
+
+      <small>
+        POWER IN EVERY STEP
+      </small>
+
+    </a>
+
+
+    <!-- =========================
+         DESKTOP NAV
+    ========================== -->
+
+    <nav class="main-nav">
+
+      <a class="<%= currentPath === '/' ? 'active' : '' %>" href="/">
+        صفحه اصلی
+      </a>
+
+      <a class="<%= currentPath === '/products' ? 'active' : '' %>" href="/products">
+        محصولات
+      </a>
+
+      <a class="<%= currentPath === '/men' ? 'active' : '' %>" href="/men">
+        مردانه
+      </a>
+
+      <a class="<%= currentPath === '/women' ? 'active' : '' %>" href="/women">
+        زنانه
+      </a>
+
+      <a class="<%= currentPath === '/box' ? 'active' : '' %>" href="/box">
+        جوراب باکسی
+      </a>
+
+      <a class="<%= currentPath === '/magazine' ? 'active' : '' %>" href="/magazine">
+        مجله
+      </a>
+
+      <a class="<%= currentPath === '/about' ? 'active' : '' %>" href="/about">
+        درباره ما
+      </a>
+
+    </nav>
+
+
+    <!-- =========================
+         ACTIONS
+    ========================== -->
+
+    <div class="header-actions">
+
+      <% if (user) { %>
+
+        <!-- PROFILE -->
+
+        <a href="/profile" class="icon-btn" aria-label="حساب کاربری" title="حساب کاربری">
+          ♙
+        </a>
+
+
+        <!-- CART -->
+
+        <a href="/cart" class="cart-btn" aria-label="سبد خرید" title="سبد خرید">
+          🛒
+
+          <b id="cartCount">
+            0
+          </b>
+        </a>
+
+
+        <% } else { %>
+
+          <!-- GUEST -->
+
+          <a href="/login" class="login-btn">
+            ورود
+          </a>
+
+          <a href="/signup" class="signup-btn">
+            ثبت‌نام
+          </a>
+
+          <% } %>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+<!-- =====================================
+     MOBILE DRAWER
+====================================== -->
+
+<div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+
+<aside class="mobile-menu" id="mobileMenu" aria-hidden="true">
+
+  <div class="mobile-menu-header">
+
+    <span class="mobile-menu-title">
+      منو
+    </span>
+
+    <button type="button" class="mobile-menu-close" id="mobileMenuClose" aria-label="بستن منو">
+      ×
+    </button>
+
+  </div>
+
+
+  <nav class="mobile-nav">
+
+    <a class="<%= currentPath === '/' ? 'active' : '' %>" href="/">
+      <span>صفحه اصلی</span>
+      <span>←</span>
+    </a>
+
+    <a class="<%= currentPath === '/products' ? 'active' : '' %>" href="/products">
+      <span>محصولات</span>
+      <span>←</span>
+    </a>
+
+    <a class="<%= currentPath === '/men' ? 'active' : '' %>" href="/men">
+      <span>مردانه</span>
+      <span>←</span>
+    </a>
+
+    <a class="<%= currentPath === '/women' ? 'active' : '' %>" href="/women">
+      <span>زنانه</span>
+      <span>←</span>
+    </a>
+
+    <a class="<%= currentPath === '/box' ? 'active' : '' %>" href="/box">
+      <span>جوراب باکسی</span>
+      <span>←</span>
+    </a>
+
+    <a class="<%= currentPath === '/magazine' ? 'active' : '' %>" href="/magazine">
+      <span>مجله</span>
+      <span>←</span>
+    </a>
+
+    <a class="<%= currentPath === '/about' ? 'active' : '' %>" href="/about">
+      <span>درباره ما</span>
+      <span>←</span>
+    </a>
+
+  </nav>
+
+
+  <div class="mobile-menu-footer">
+
+    <% if (user) { %>
+
+      <a href="/profile">
+        حساب کاربری
+      </a>
+
+      <a href="/cart">
+        سبد خرید
+      </a>
+
+      <% } else { %>
+
+        <a href="/login">
+          ورود
+        </a>
+
+        <a href="/signup">
+          ثبت‌نام
+        </a>
+
+        <% } %>
+
+  </div>
+
+</aside>

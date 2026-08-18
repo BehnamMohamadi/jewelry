@@ -1,0 +1,94 @@
+<section class="products section" id="products">
+
+  <div class="container">
+
+    <div class="section-head">
+
+      <div class="section-title">
+        <span>انتخاب محبوب</span>
+        <h2>محصولات پرفروش</h2>
+        <i></i>
+      </div>
+
+      <div class="product-tabs" id="productTabs">
+        <button type="button" class="active" data-filter="all">
+          همه
+        </button>
+
+        <button type="button" data-filter="men">
+          مردانه
+        </button>
+
+        <button type="button" data-filter="women">
+          زنانه
+        </button>
+
+        <button type="button" data-filter="box">
+          باکسی
+        </button>
+      </div>
+
+    </div>
+
+
+    <div class="product-grid" id="productGrid">
+
+      <% if (typeof products !=="undefined" && products.length> 0) { %>
+
+        <% products.forEach(function(product) { %>
+
+          <article class="product-card">
+
+            <div class="product-img">
+
+              <img src="<%= product.image %>" alt="<%= product.name %>">
+
+            </div>
+
+            <div class="product-info">
+
+              <h3>
+                <%= product.name %>
+              </h3>
+
+              <div class="product-bottom">
+
+                <span class="price">
+                  <%= Number(product.price).toLocaleString("fa-IR") %>
+                    تومان
+                </span>
+
+                <button type="button" class="add-cart" data-product-id="<%= product._id %>">
+                  +
+                </button>
+
+              </div>
+
+            </div>
+
+          </article>
+
+          <% }); %>
+
+            <% } else { %>
+
+              <div class="products-empty">
+                <p>در حال حاضر محصولی برای نمایش وجود ندارد.</p>
+              </div>
+
+              <% } %>
+
+    </div>
+
+
+    <div class="center">
+
+      <a class="dark-btn" href="/products">
+        مشاهده همه محصولات
+      </a>
+
+    </div>
+
+  </div>
+
+</section>

@@ -1,0 +1,175 @@
+/* =========================================
+   BOX BANNER
+========================================= */
+
+.box-banner {
+  background: #111111;
+
+  color: #ffffff;
+
+  overflow: hidden;
+}
+
+.box-banner-inner {
+  position: relative;
+
+  min-height: 470px;
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  align-items: center;
+
+  gap: 50px;
+
+  padding: 70px 0;
+}
+
+.box-banner-inner>div:first-child {
+  position: relative;
+  z-index: 2;
+}
+
+.box-banner-inner>div:first-child>span {
+  color: #ff6a00;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 2px;
+}
+
+.box-banner-inner h2 {
+  margin-top: 18px;
+
+  font-size: 42px;
+  line-height: 1.5;
+
+  letter-spacing: -1.5px;
+}
+
+.box-banner-inner p {
+  max-width: 420px;
+
+  margin-top: 18px;
+
+  color: rgba(255, 255, 255, 0.55);
+
+  font-size: 13px;
+
+  line-height: 2;
+}
+
+
+/* =========================================
+   BIG GIFT
+========================================= */
+
+.big-gift {
+  position: relative;
+
+  height: 360px;
+}
+
+.big-box {
+  position: absolute;
+
+  top: 50%;
+  right: 50%;
+
+  width: 260px;
+  height: 200px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 106, 0, 0.45);
+
+  background: #191919;
+
+  color: #ffffff;
+
+  font-size: 34px;
+  font-weight: 800;
+
+  transform:
+    translate(50%, -50%) rotate(-5deg);
+
+  box-shadow:
+    0 35px 70px rgba(0, 0, 0, 0.5);
+}
+
+.big-box b {
+  color: #ff6a00;
+}
+
+.big-box small {
+  position: absolute;
+
+  bottom: 30px;
+
+  color: #777777;
+
+  font-size: 6px;
+
+  letter-spacing: 3px;
+}
+
+.box-socks {
+  position: absolute;
+
+  right: 15px;
+  bottom: 20px;
+}
+
+.box-socks i {
+  display: block;
+
+  width: 125px;
+  height: 28px;
+
+  margin-top: -7px;
+
+  border-radius: 12px;
+
+  background: #333333;
+
+  border: 1px solid #444444;
+}
+
+.box-socks i:nth-child(2) {
+  background: #444444;
+}
+
+.box-socks i:nth-child(3) {
+  background: #242424;
+}
+
+.box-socks i:nth-child(4) {
+  background: #555555;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 800px) {
+
+  .box-banner-inner {
+    grid-template-columns: 1fr;
+
+    padding: 60px 35px;
+  }
+
+  .box-banner-inner h2 {
+    font-size: 30px;
+  }
+
+  .big-gift {
+    height: 240px;
+  }
+
+}
